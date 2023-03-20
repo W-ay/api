@@ -2,6 +2,7 @@ package com.way.project.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.way.apiclient.client.ApiClient;
 import com.way.project.annotation.AuthCheck;
 import com.way.project.common.BaseResponse;
 import com.way.project.common.DeleteRequest;
@@ -41,8 +42,8 @@ public class InterfaceInfoController {
     @Resource
     private UserService userService;
 
-    // region 增删改查
-
+    @Resource
+    private ApiClient apiClient;
     /**
      * 创建
      *
@@ -194,6 +195,5 @@ public class InterfaceInfoController {
         return ResultUtils.success(interfaceInfoPage);
     }
 
-    // endregion
-
+    //todo 上线、下线接口
 }

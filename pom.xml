@@ -10,7 +10,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.way</groupId>
-    <artifactId>way-api</artifactId>
+    <artifactId>api-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>way-api</name>
     <description>api开放平台</description>
@@ -95,6 +95,12 @@
             <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.way</groupId>
+            <artifactId>api-client-sdk</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -36,7 +36,7 @@ public class InterfaceInfo implements Serializable {
      * 接口地址
      */
     private String url;
-
+    @TableField(value = "request_header")
     /**
      * 请求头
      */
@@ -45,6 +45,7 @@ public class InterfaceInfo implements Serializable {
     /**
      * 响应头
      */
+    @TableField(value = "response_header")
     private String responseHeader;
 
     /**
@@ -65,16 +66,19 @@ public class InterfaceInfo implements Serializable {
     /**
      * 创建时间
      */
+    @TableField(value = "create_time")
     private Date createTime;
 
     /**
      * 更新时间
      */
+    @TableField(value = "update_time")
     private Date updateTime;
 
     /**
      * 是否删除(0-未删, 1-已删)
      */
+    @TableField(value = "is_deleted")
     private Integer isDeleted;
 
     @TableField(exist = false)
