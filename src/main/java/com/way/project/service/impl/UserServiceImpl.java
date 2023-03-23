@@ -1,5 +1,7 @@
 package com.way.project.service.impl;
 
+import cn.hutool.core.util.RandomUtil;
+import cn.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.way.project.constant.UserConstant;
@@ -20,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 用户服务实现类
  *
- * @author yupi
+ * @author way
  */
 @Service
 @Slf4j
@@ -65,6 +67,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             User user = new User();
             user.setUserAccount(userAccount);
             user.setUserPassword(encryptPassword);
+            user.setAccessKey(DigestUtil.md5Hex(SALT+userAccount+ RandomUtil.randomString(5)));
+            user.setSecretKey(DigestUtil.md5Hex(SALT+userAccount+ RandomUtil.randomString(8)));
             boolean saveResult = this.save(user);
             if (!saveResult) {
                 throw new BusinessException(ErrorCode.SYSTEM_ERROR, "注册失败，数据库错误");

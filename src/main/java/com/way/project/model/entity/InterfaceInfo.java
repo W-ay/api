@@ -36,11 +36,16 @@ public class InterfaceInfo implements Serializable {
      * 接口地址
      */
     private String url;
-    @TableField(value = "request_header")
     /**
      * 请求头
      */
+    @TableField(value = "request_header")
     private String requestHeader;
+    /**
+     * 请求参数
+     */
+    @TableField(value = "request_param")
+    private String requestParams;
 
     /**
      * 响应头

@@ -3,7 +3,7 @@ package com.way.project.common;
 /**
  * 返回工具类
  *
- * @author yupi
+ * @author way
  */
 public class ResultUtils {
 

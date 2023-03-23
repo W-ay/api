@@ -5,21 +5,25 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 帖子审核状态枚举
+ * 接口状态枚举
  *
  * @author way
  */
-public enum PostReviewStatusEnum {
-
-    REVIEWING("待审核", 0),
-    PASS("通过", 1),
-    REJECT("拒绝", 2);
+public enum InterfaceInfoEnum {
+    /**
+     * 接口下线
+     */
+    OFFLINE("下线", 0),
+    /**
+     * 接口上线
+     */
+    ONLINE("上限", 1);
 
     private final String text;
 
     private final int value;
 
-    PostReviewStatusEnum(String text, int value) {
+    InterfaceInfoEnum(String text, int value) {
         this.text = text;
         this.value = value;
     }

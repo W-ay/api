@@ -49,6 +49,16 @@ public class User implements Serializable {
      * 密码
      */
     private String userPassword;
+    /**
+     * 访问key
+     */
+    @TableField("access_key")
+    private String accessKey;
+    /**
+     * 密钥key
+     */
+    @TableField("secret_key")
+    private String secretKey;
 
     /**
      * 创建时间

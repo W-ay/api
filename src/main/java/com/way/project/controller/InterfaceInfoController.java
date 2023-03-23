@@ -2,19 +2,19 @@ package com.way.project.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.gson.Gson;
 import com.way.apiclient.client.ApiClient;
 import com.way.project.annotation.AuthCheck;
-import com.way.project.common.BaseResponse;
-import com.way.project.common.DeleteRequest;
-import com.way.project.common.ErrorCode;
-import com.way.project.common.ResultUtils;
+import com.way.project.common.*;
 import com.way.project.constant.CommonConstant;
 import com.way.project.exception.BusinessException;
 import com.way.project.model.dto.interfaceinfo.InterfaceInfoAddRequest;
+import com.way.project.model.dto.interfaceinfo.InterfaceInfoInvokeRequest;
 import com.way.project.model.dto.interfaceinfo.InterfaceInfoQueryRequest;
 import com.way.project.model.dto.interfaceinfo.InterfaceInfoUpdateRequest;
 import com.way.project.model.entity.InterfaceInfo;
 import com.way.project.model.entity.User;
+import com.way.project.model.enums.InterfaceInfoEnum;
 import com.way.project.service.InterfaceInfoService;
 import com.way.project.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +27,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * 帖子接口
+ * 用户信息接口
  *
- * @author yupi
+ * @author way
  */
 @RestController
 @RequestMapping("/interfaceInfo")
@@ -44,6 +44,7 @@ public class InterfaceInfoController {
 
     @Resource
     private ApiClient apiClient;
+
     /**
      * 创建
      *
@@ -106,7 +107,7 @@ public class InterfaceInfoController {
      */
     @PostMapping("/update")
     public BaseResponse<Boolean> updateInterfaceInfo(@RequestBody InterfaceInfoUpdateRequest interfaceInfoUpdateRequest,
-                                            HttpServletRequest request) {
+                                                     HttpServletRequest request) {
         if (interfaceInfoUpdateRequest == null || interfaceInfoUpdateRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -170,6 +171,7 @@ public class InterfaceInfoController {
      * @return
      */
     @GetMapping("/list/page")
+    @AuthCheck(mustRole = "admin")
     public BaseResponse<Page<InterfaceInfo>> listInterfaceInfoByPage(InterfaceInfoQueryRequest interfaceInfoQueryRequest, HttpServletRequest request) {
         if (interfaceInfoQueryRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -195,5 +197,107 @@ public class InterfaceInfoController {
         return ResultUtils.success(interfaceInfoPage);
     }
 
-    //todo 上线、下线接口
+    /**
+     * 上限接口
+     *
+     * @param idRequest
+     * @param request
+     * @return
+     */
+    @AuthCheck(mustRole = "admin")
+    @PostMapping("/online")
+    public BaseResponse<Boolean> onlineInterfaceInfo(@RequestBody IdRequest idRequest, HttpServletRequest request) {
+        //参数校验
+        if (idRequest == null || idRequest.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Long id = idRequest.getId();
+        //判断接口是否存在
+        InterfaceInfo interfaceInfo = interfaceInfoService.getById(id);
+        if (interfaceInfo == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+
+        //判断接口是否可以调用
+        com.way.apiclient.model.User user = new com.way.apiclient.model.User();
+        user.setUsername("张接口");
+        String byPost = apiClient.getNameByPost(user);
+        if (StringUtils.isBlank(byPost)) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "接口调用失败");
+        }
+
+
+        //修改状态字段为1
+        InterfaceInfo interfaceInfo1 = new InterfaceInfo();
+        interfaceInfo1.setId(id);
+        interfaceInfo1.setStatus(InterfaceInfoEnum.ONLINE.getValue());
+        boolean update = interfaceInfoService.updateById(interfaceInfo1);
+        return ResultUtils.success(update);
+
+    }
+
+    /**
+     * 下线接口
+     *
+     * @param idRequest
+     * @param request
+     * @return
+     */
+    @AuthCheck(mustRole = "admin")
+    @PostMapping("/offline")
+    public BaseResponse<Boolean> offlineInterfaceInfo(@RequestBody IdRequest idRequest, HttpServletRequest request) {
+        //参数校验
+        if (idRequest == null || idRequest.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Long id = idRequest.getId();
+        //判断接口是否存在
+        InterfaceInfo interfaceInfo = interfaceInfoService.getById(id);
+        if (interfaceInfo == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+
+        //修改状态字段为1
+        InterfaceInfo interfaceInfo1 = new InterfaceInfo();
+        interfaceInfo1.setId(id);
+        interfaceInfo1.setStatus(InterfaceInfoEnum.OFFLINE.getValue());
+        boolean update = interfaceInfoService.updateById(interfaceInfo1);
+        return ResultUtils.success(update);
+    }
+
+    /**
+     * 在线调用接口
+     *
+     * @param interfaceInfoInvokeRequest
+     * @param request
+     * @return
+     */
+    @AuthCheck(mustRole = "admin")
+    @PostMapping("/invoke")
+    public BaseResponse invokeInterfaceInfo(@RequestBody InterfaceInfoInvokeRequest interfaceInfoInvokeRequest, HttpServletRequest request) {
+        //参数校验
+        if (interfaceInfoInvokeRequest == null || interfaceInfoInvokeRequest.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Long id = interfaceInfoInvokeRequest.getId();
+        //判断接口是否存在
+        InterfaceInfo interfaceInfo = interfaceInfoService.getById(id);
+        if (interfaceInfo == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        //接口是否开启
+        if (interfaceInfo.getStatus() == InterfaceInfoEnum.OFFLINE.getValue()) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "接口未开启");
+        }
+        User loginUser = userService.getLoginUser(request);
+        String accessKey = loginUser.getAccessKey();
+        String secretKey = loginUser.getSecretKey();
+        ApiClient tempClient = new ApiClient(accessKey, secretKey);
+        Gson gson = new Gson();
+        com.way.apiclient.model.User user = gson.fromJson(interfaceInfoInvokeRequest.getUserRequestParams(), com.way.apiclient.model.User.class);
+        String resp = tempClient.getNameByPost(user);
+
+        return ResultUtils.success(resp);
+    }
+
 }

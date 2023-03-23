@@ -3,7 +3,7 @@ package com.way.project.common;
 /**
  * 错误码
  *
- * @author yupi
+ * @author way
  */
 public enum ErrorCode {
 

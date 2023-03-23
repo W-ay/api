@@ -3,7 +3,7 @@ package com.way.project.constant;
 /**
  * 用户常量
  *
- * @author yupi
+ * @author way
  */
 public interface UserConstant {
 

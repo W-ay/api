@@ -10,6 +10,7 @@
             <result property="description" column="description" jdbcType="VARCHAR"/>
             <result property="url" column="url" jdbcType="VARCHAR"/>
             <result property="requestHeader" column="request_header" jdbcType="VARCHAR"/>
+            <result property="requestParams" column="request_param" jdbcType="VARCHAR"/>
             <result property="responseHeader" column="response_header" jdbcType="VARCHAR"/>
             <result property="status" column="status" jdbcType="INTEGER"/>
             <result property="method" column="method" jdbcType="VARCHAR"/>
@@ -22,7 +23,7 @@
     <sql id="Base_Column_List">
         id,name,description,
         url,request_header,response_header,
-        status,method,userId,
+        status,method,userId,request_param
         create_time,update_time,is_deleted
     </sql>
 </mapper>
