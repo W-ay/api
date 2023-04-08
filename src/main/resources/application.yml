@@ -38,3 +38,12 @@ way:
     user-id: 1
     app-id: way
     app-secret:
+
+dubbo:
+  application:
+    name: dubbo-provider
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    address: nacos://localhost:8848
