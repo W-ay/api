@@ -2,6 +2,7 @@ package com.way.project.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.way.dubbointerface.model.entity.User;
 import com.way.project.annotation.AuthCheck;
 import com.way.project.constant.CommonConstant;
 import com.way.project.exception.BusinessException;
@@ -14,7 +15,6 @@ import com.way.project.model.dto.post.PostAddRequest;
 import com.way.project.model.dto.post.PostQueryRequest;
 import com.way.project.model.dto.post.PostUpdateRequest;
 import com.way.project.model.entity.Post;
-import com.way.project.model.entity.User;
 import com.way.project.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

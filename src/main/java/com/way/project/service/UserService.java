@@ -2,7 +2,7 @@ package com.way.project.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.way.project.model.entity.User;
+import com.way.dubbointerface.model.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
 

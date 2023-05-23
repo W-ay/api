@@ -1,7 +1,7 @@
 package com.way.project.mapper;
 
-import com.way.project.model.entity.InterfaceInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.way.dubbointerface.model.entity.InterfaceInfo;
 
 /**
 * @author Way

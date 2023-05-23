@@ -1,8 +1,7 @@
 package com.way.project.service;
 
-import com.way.project.model.entity.InterfaceInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.way.project.model.entity.InterfaceInfo;
+import com.way.dubbointerface.model.entity.InterfaceInfo;
 
 /**
 * @author Way

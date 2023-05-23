@@ -4,11 +4,11 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.way.dubbointerface.model.entity.User;
 import com.way.project.constant.UserConstant;
 import com.way.project.exception.BusinessException;
 import com.way.project.common.ErrorCode;
 import com.way.project.mapper.UserMapper;
-import com.way.project.model.entity.User;
 import com.way.project.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -35,7 +35,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     /**
      * 盐值，混淆密码
      */
-    private static final String SALT = "yupi";
+    private static final String SALT = "way1";
 
     @Override
     public long userRegister(String userAccount, String userPassword, String checkPassword) {

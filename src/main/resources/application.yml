@@ -17,9 +17,16 @@ spring:
     store-type: none
   # redis 配置
   redis:
-    port: 6379
     host: localhost
-    database: 0
+    port: 6379
+    #    password: redispwd123
+    jedis:
+      pool:
+        min-idle: 0
+        max-idle: 8
+        max-wait: 50000
+        max-active: 8
+
 server:
   port: 7529
   servlet:

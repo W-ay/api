@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.way.project.mapper.UserMapper">
 
-    <resultMap id="BaseResultMap" type="com.way.project.model.entity.User">
+    <resultMap id="BaseResultMap" type="com.way.dubbointerface.model.entity.User">
         <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="userName" column="userName" jdbcType="VARCHAR"/>
         <result property="userAccount" column="userAccount" jdbcType="VARCHAR"/>
@@ -23,7 +23,7 @@
         id,userName,userAccount,
         userAvatar,gender,userRole,
         userPassword,createTime,updateTime,
-        accessKey,secretKey
+        access_key,secret_key
         isDelete
     </sql>
 </mapper>

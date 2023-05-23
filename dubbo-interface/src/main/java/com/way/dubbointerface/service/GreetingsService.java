@@ -1,4 +1,4 @@
-package com.way.dubbointerface.api;
+package com.way.dubbointerface.service;
 
 /**
  * @author Way

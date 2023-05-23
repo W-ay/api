@@ -1,6 +1,6 @@
 package com.way.project.service.dubboimpl;
 
-import com.way.dubbointerface.api.GreetingsService;
+import com.way.dubbointerface.service.GreetingsService;
 import org.apache.dubbo.config.annotation.DubboService;
 
 /**
