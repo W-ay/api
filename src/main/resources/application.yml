@@ -28,7 +28,8 @@ spring:
         max-active: 8
 
 server:
-  port: 7529
+#  port: 7529
+  port: 17529
   servlet:
     context-path: /api
 mybatis-plus:
