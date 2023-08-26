@@ -2,7 +2,6 @@ package com.way.project.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.google.gson.Gson;
 import com.way.apiclient.client.ApiClient;
 import com.way.dubbointerface.model.entity.InterfaceInfo;
 import com.way.dubbointerface.model.entity.User;
@@ -219,12 +218,12 @@ public class InterfaceInfoController {
         }
 
         //判断接口是否可以调用
-        com.way.apiclient.model.User user = new com.way.apiclient.model.User();
-        user.setUsername("张接口");
-        String byPost = apiClient.getNameByPost(user);
-        if (StringUtils.isBlank(byPost)) {
-            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "接口调用失败");
-        }
+//        com.way.apiclient.model.User user = new com.way.apiclient.model.User();
+//        user.setUsername("张接口");
+//        String byPost = apiClient.getNameByPost(user);
+//        if (StringUtils.isBlank(byPost)) {
+//            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "接口调用失败");
+//        }
 
 
         //修改状态字段为1
@@ -292,10 +291,14 @@ public class InterfaceInfoController {
         User loginUser = userService.getLoginUser(request);
         String accessKey = loginUser.getAccessKey();
         String secretKey = loginUser.getSecretKey();
-        ApiClient tempClient = new ApiClient(accessKey, secretKey);
-        Gson gson = new Gson();
-        com.way.apiclient.model.User user = gson.fromJson(interfaceInfoInvokeRequest.getUserRequestParams(), com.way.apiclient.model.User.class);
-        String resp = tempClient.getNameByPost(user);
+        //TODO 根据地址调用接口调用接口
+        //TODO 存储client
+
+        ApiClient client = new ApiClient(accessKey, secretKey);
+        String resp = client.invokeInterface(interfaceInfo.getUrl(), interfaceInfoInvokeRequest.getUserRequestParams(), interfaceInfo.getMethod());
+//        Gson gson = new Gson();
+//        com.way.apiclient.model.User user = gson.fromJson(interfaceIanfoInvokeRequest.getUserRequestParams(), com.way.apiclient.model.User.class);
+//        String resp = tempClient.getNameByPost(user);
 
         return ResultUtils.success(resp);
     }

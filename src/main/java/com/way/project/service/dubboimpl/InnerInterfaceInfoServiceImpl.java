@@ -15,6 +15,13 @@ import javax.annotation.Resource;
 public class InnerInterfaceInfoServiceImpl implements InnerInterfaceInfoService {
     @Resource
     private InterfaceInfoService interfaceInfoService;
+
+    /**
+     * 根据url和请求方法获取接口信息
+     * @param url 接口路径
+     * @param method 接口方法
+     * @return
+     */
     @Override
     public InterfaceInfo getInterfaceInfo(String url, String method) {
         QueryWrapper<InterfaceInfo> queryWrapper = new QueryWrapper<>();
