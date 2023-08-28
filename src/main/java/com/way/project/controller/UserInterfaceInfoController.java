@@ -16,10 +16,12 @@ import com.way.project.model.dto.userinterfaceinfo.UserInterfaceAddRequest;
 import com.way.project.model.dto.userinterfaceinfo.UserInterfaceInfoQueryRequest;
 import com.way.project.model.vo.UserInterfaceInfoVO;
 import com.way.project.service.UserInterfaceInfoService;
+import com.way.project.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,10 +31,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/userInterfaceInfo")
 public class UserInterfaceInfoController {
+    private final UserService userService;
     private final UserInterfaceInfoService userInterfaceInfoService;
 
-    public UserInterfaceInfoController(UserInterfaceInfoService userInterfaceInfoService) {
+    public UserInterfaceInfoController(UserInterfaceInfoService userInterfaceInfoService, UserService userService) {
         this.userInterfaceInfoService = userInterfaceInfoService;
+        this.userService = userService;
     }
 
     @GetMapping("/list/page")
@@ -65,10 +69,12 @@ public class UserInterfaceInfoController {
     }
 
     @PostMapping("/open")
-    public BaseResponse openInterface(@RequestBody UserInterfaceAddRequest request) {
+    @AuthCheck(anyRole = {"admin","user"})
+    public BaseResponse openInterface(@RequestBody UserInterfaceAddRequest request ,HttpServletRequest httpServletRequest) {
+        User loginUser = userService.getLoginUser(httpServletRequest);
         Long interfaceInfoId = request.getInterfaceInfoId();
-        Long userId = request.getUserId();
-        if (ObjectUtils.anyNull(interfaceInfoId, userId)) {
+        Long userId = loginUser.getId();
+        if (ObjectUtils.anyNull(interfaceInfoId)) {
             return ResultUtils.error(ErrorCode.PARAMS_ERROR, "请输入正确的参数");
         }
         LambdaQueryWrapper<UserInterfaceInfo> wrapper = new LambdaQueryWrapper<>();

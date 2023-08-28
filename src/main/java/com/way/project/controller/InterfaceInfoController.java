@@ -173,7 +173,8 @@ public class InterfaceInfoController {
      * @return
      */
     @GetMapping("/list/page")
-    @AuthCheck(mustRole = "admin")
+//    @AuthCheck(mustRole = "admin")
+    @AuthCheck(anyRole = {"admin","user"})
     public BaseResponse<Page<InterfaceInfo>> listInterfaceInfoByPage(InterfaceInfoQueryRequest interfaceInfoQueryRequest, HttpServletRequest request) {
         if (interfaceInfoQueryRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -192,6 +193,11 @@ public class InterfaceInfoController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         QueryWrapper<InterfaceInfo> queryWrapper = new QueryWrapper<>(interfaceInfoQuery);
+        User loginUser = userService.getLoginUser(request);
+        //普通用户只能查开放的接口
+        if (loginUser.getUserRole().equals("user")){
+            queryWrapper.eq("status",1);
+        }
         queryWrapper.like(StringUtils.isNotBlank(description), "description", description);
         queryWrapper.orderBy(StringUtils.isNotBlank(sortField),
                 sortOrder.equals(CommonConstant.SORT_ORDER_ASC), sortField);
@@ -274,7 +280,7 @@ public class InterfaceInfoController {
      * @param request
      * @return
      */
-    @AuthCheck(mustRole = "admin")
+    @AuthCheck(anyRole = {"admin","user"})
     @PostMapping("/invoke")
     public BaseResponse invokeInterfaceInfo(@RequestBody InterfaceInfoInvokeRequest interfaceInfoInvokeRequest, HttpServletRequest request) {
         //参数校验
