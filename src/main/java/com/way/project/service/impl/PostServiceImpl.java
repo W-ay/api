@@ -1,9 +1,9 @@
 package com.way.project.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.way.project.exception.BusinessException;
+import com.way.dubbointerface.common.BusinessException;
+import com.way.dubbointerface.common.ErrorCode;
 import com.way.project.service.PostService;
-import com.way.project.common.ErrorCode;
 import com.way.project.mapper.PostMapper;
 import com.way.project.model.entity.Post;
 import com.way.project.model.enums.PostGenderEnum;

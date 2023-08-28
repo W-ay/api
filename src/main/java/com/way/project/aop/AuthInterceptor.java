@@ -1,10 +1,10 @@
 package com.way.project.aop;
 
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.way.dubbointerface.common.BusinessException;
+import com.way.dubbointerface.common.ErrorCode;
 import com.way.dubbointerface.model.entity.User;
 import com.way.project.annotation.AuthCheck;
-import com.way.project.common.ErrorCode;
-import com.way.project.exception.BusinessException;
 import com.way.project.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;

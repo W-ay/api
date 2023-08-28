@@ -1,7 +1,8 @@
 package com.way.project.exception;
 
-import com.way.project.common.BaseResponse;
-import com.way.project.common.ErrorCode;
+import com.way.dubbointerface.common.BaseResponse;
+import com.way.dubbointerface.common.BusinessException;
+import com.way.dubbointerface.common.ErrorCode;
 import com.way.project.common.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;

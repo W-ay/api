@@ -1,9 +1,9 @@
 package com.way.project.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.way.dubbointerface.common.BusinessException;
+import com.way.dubbointerface.common.ErrorCode;
 import com.way.dubbointerface.model.entity.InterfaceInfo;
-import com.way.project.common.ErrorCode;
-import com.way.project.exception.BusinessException;
 import com.way.project.service.InterfaceInfoService;
 import com.way.project.mapper.InterfaceInfoMapper;
 import org.apache.commons.lang3.ObjectUtils;

@@ -4,10 +4,10 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.way.dubbointerface.common.BusinessException;
+import com.way.dubbointerface.common.ErrorCode;
 import com.way.dubbointerface.model.entity.User;
 import com.way.project.constant.UserConstant;
-import com.way.project.exception.BusinessException;
-import com.way.project.common.ErrorCode;
 import com.way.project.mapper.UserMapper;
 import com.way.project.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -92,7 +92,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         // 2. 加密
         String encryptPassword = DigestUtils.md5DigestAsHex((SALT + userPassword).getBytes());
         // 查询用户是否存在
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+             QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userAccount", userAccount);
         queryWrapper.eq("userPassword", encryptPassword);
         User user = userMapper.selectOne(queryWrapper);

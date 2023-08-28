@@ -2,14 +2,14 @@ package com.way.project.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.way.dubbointerface.common.BaseResponse;
+import com.way.dubbointerface.common.BusinessException;
+import com.way.dubbointerface.common.ErrorCode;
 import com.way.dubbointerface.model.entity.User;
 import com.way.project.annotation.AuthCheck;
 import com.way.project.constant.CommonConstant;
-import com.way.project.exception.BusinessException;
 import com.way.project.service.PostService;
-import com.way.project.common.BaseResponse;
 import com.way.project.common.DeleteRequest;
-import com.way.project.common.ErrorCode;
 import com.way.project.common.ResultUtils;
 import com.way.project.model.dto.post.PostAddRequest;
 import com.way.project.model.dto.post.PostQueryRequest;

@@ -1,5 +1,8 @@
 package com.way.project.common;
 
+import com.way.dubbointerface.common.BaseResponse;
+import com.way.dubbointerface.common.ErrorCode;
+
 /**
  * 返回工具类
  *

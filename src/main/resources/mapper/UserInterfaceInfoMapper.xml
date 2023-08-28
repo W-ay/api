@@ -29,4 +29,12 @@
         GROUP BY interfaceInfoId
         ORDER BY totalNum DESC LIMIT #{limit};
     </select>
+
+    <select id="listInterfaceInfoByUserId" resultType="com.way.project.model.vo.UserInterfaceInfoVO">
+        select ui.id, i.name, ui.leftNum, ui.totalNum, ui.createTime, ui.updateTime
+        from interface_info as i,
+             user_interface_info as ui
+        where ui.interfaceInfoId = i.id
+          and ui.userId = #{userId} limit #{index},#{size};
+    </select>
 </mapper>

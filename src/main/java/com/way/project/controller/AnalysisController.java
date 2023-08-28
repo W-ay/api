@@ -1,10 +1,10 @@
 package com.way.project.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.way.dubbointerface.common.BaseResponse;
 import com.way.dubbointerface.model.entity.InterfaceInfo;
 import com.way.dubbointerface.model.entity.UserInterfaceInfo;
 import com.way.project.annotation.AuthCheck;
-import com.way.project.common.BaseResponse;
 import com.way.project.common.ResultUtils;
 import com.way.project.mapper.UserInterfaceInfoMapper;
 import com.way.project.model.vo.InterfaceInfoVO;
