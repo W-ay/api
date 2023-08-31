@@ -1,6 +1,7 @@
 package com.way.project.exception;
 
 import cn.hutool.core.io.IORuntimeException;
+import com.alibaba.fastjson.JSONException;
 import com.way.dubbointerface.common.BaseResponse;
 import com.way.dubbointerface.common.BusinessException;
 import com.way.dubbointerface.common.ErrorCode;
@@ -40,6 +41,12 @@ public class GlobalExceptionHandler {
     public BaseResponse<?> IORuntimeExceptionHandler(IORuntimeException e) {
         log.error("IORuntimeExceptionHandler: \n", e);
         return ResultUtils.error(ErrorCode.CONNECTION_ERROR, "服务连接失败");
+//        return ResultUtils.error(ErrorCode.SYSTEM_ERROR, e.getMessage());
+    }
+    @ExceptionHandler(JSONException.class)
+    public BaseResponse<?> IORuntimeExceptionHandler(JSONException e) {
+        log.error("JSONExceptionHandler: \n", e);
+        return ResultUtils.error(ErrorCode.INTERFACE_RESPONSE_ERROR,ErrorCode.INTERFACE_RESPONSE_ERROR.getMessage());
 //        return ResultUtils.error(ErrorCode.SYSTEM_ERROR, e.getMessage());
     }
 }

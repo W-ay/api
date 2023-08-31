@@ -1,5 +1,6 @@
 package com.way.project.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.way.apiclient.client.ApiClient;
@@ -22,10 +23,12 @@ import com.way.project.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.http.codec.json.Jackson2JsonDecoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -282,7 +285,7 @@ public class InterfaceInfoController {
      */
     @AuthCheck(anyRole = {"admin","user"})
     @PostMapping("/invoke")
-    public BaseResponse invokeInterfaceInfo(@RequestBody InterfaceInfoInvokeRequest interfaceInfoInvokeRequest, HttpServletRequest request) {
+    public BaseResponse invokeInterfaceInfo(@RequestBody InterfaceInfoInvokeRequest interfaceInfoInvokeRequest, HttpServletRequest request, HttpServletResponse response) {
         //参数校验
         if (interfaceInfoInvokeRequest == null || interfaceInfoInvokeRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -308,7 +311,12 @@ public class InterfaceInfoController {
 //        Gson gson = new Gson();
 //        com.way.apiclient.model.User user = gson.fromJson(interfaceIanfoInvokeRequest.getUserRequestParams(), com.way.apiclient.model.User.class);
 //        String resp = tempClient.getNameByPost(user);
-
+        BaseResponse baseResponse = JSON.parseObject(resp, BaseResponse.class);
+        if (baseResponse==null){
+            return ResultUtils.error(ErrorCode.CONNECTION_ERROR,resp);
+        }else if (baseResponse.getCode()!=0){
+            return ResultUtils.error(ErrorCode.OPERATION_ERROR,resp);
+        }
         return ResultUtils.success(resp);
     }
 
