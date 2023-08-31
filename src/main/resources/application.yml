@@ -1,12 +1,6 @@
 spring:
   application:
     name: way-api
-  # DataSource Config
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/api_db
-    username: root
-    password: 123
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
@@ -46,12 +40,3 @@ way:
     user-id: 1
     app-id: way
     app-secret:
-
-dubbo:
-  application:
-    name: dubbo-provider
-  protocol:
-    name: dubbo
-    port: -1
-  registry:
-    address: nacos://localhost:8848
