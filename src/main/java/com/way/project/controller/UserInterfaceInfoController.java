@@ -17,11 +17,14 @@ import com.way.project.model.dto.userinterfaceinfo.UserInterfaceInfoQueryRequest
 import com.way.project.model.vo.UserInterfaceInfoVO;
 import com.way.project.service.UserInterfaceInfoService;
 import com.way.project.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +33,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/userInterfaceInfo")
+@Api(tags = "用户-接口信息 管理")
 public class UserInterfaceInfoController {
     private final UserService userService;
     private final UserInterfaceInfoService userInterfaceInfoService;
@@ -40,6 +44,10 @@ public class UserInterfaceInfoController {
     }
 
     @GetMapping("/list/page")
+    @ApiOperation("获取用户开通的所有接口信息")
+    @ApiImplicitParam(name = "pageSize", value = "页大小", dataType = "String",
+            paramType = "query",
+            required = true)
     public BaseResponse listUserInterfaceInfo(UserInterfaceInfoQueryRequest queryRequest, HttpServletRequest request) {
         if (queryRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -69,8 +77,9 @@ public class UserInterfaceInfoController {
     }
 
     @PostMapping("/open")
-    @AuthCheck(anyRole = {"admin","user"})
-    public BaseResponse openInterface(@RequestBody UserInterfaceAddRequest request ,HttpServletRequest httpServletRequest) {
+    @AuthCheck(anyRole = {"admin", "user"})
+    @ApiOperation("开通接口")
+    public BaseResponse openInterface(@RequestBody@ApiParam("用户开通接口信息") UserInterfaceAddRequest request, HttpServletRequest httpServletRequest) {
         User loginUser = userService.getLoginUser(httpServletRequest);
         Long interfaceInfoId = request.getInterfaceInfoId();
         Long userId = loginUser.getId();
@@ -93,7 +102,7 @@ public class UserInterfaceInfoController {
         return ResultUtils.success("接口开通成功");
     }
 
-    @AuthCheck(anyRole = {"admin","user"})
+    @AuthCheck(anyRole = {"admin", "user"})
     @PostMapping("/increase")
     public BaseResponse addCount(@RequestBody UserInterfaceAddRequest request) {
         boolean b = userInterfaceInfoService.addCount(request);

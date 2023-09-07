@@ -1,5 +1,6 @@
+# 生产环境信息
+**/resources/application-prod.yml
 logs
-logs/**
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
