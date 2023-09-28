@@ -39,4 +39,4 @@ way:
   api:
     user-id: 1
     app-id: way
-    app-secret:
+    app-secret: 1
