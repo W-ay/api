@@ -1,0 +1,9 @@
+[submodule "api-client-sdk"]
+	path = api-client-sdk
+	url = https://github.com/W-ay/api-client-sdk
+[submodule "api-gateway"]
+	path = api-gateway
+	url = https://github.com/W-ay/api-gateway
+[submodule "api-interface"]
+	path = api-interface
+	url = https://github.com/W-ay/api-interface
