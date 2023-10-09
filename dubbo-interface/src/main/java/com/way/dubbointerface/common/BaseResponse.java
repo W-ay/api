@@ -1,6 +1,7 @@
 package com.way.dubbointerface.common;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -18,6 +19,9 @@ public class BaseResponse<T> implements Serializable {
     private T data;
 
     private String message;
+
+    public BaseResponse() {
+    }
 
     public BaseResponse(int code, T data, String message) {
         this.code = code;

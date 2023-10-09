@@ -317,7 +317,8 @@ public class InterfaceInfoController {
         }else if (baseResponse.getCode()!=0){
             return ResultUtils.error(ErrorCode.OPERATION_ERROR,resp);
         }
-        return ResultUtils.success(resp);
+//        return ResultUtils.success(resp);
+        return new StrResponse(0,resp,"ok");
     }
 
 }

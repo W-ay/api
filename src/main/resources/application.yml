@@ -1,3 +1,5 @@
+
+
 spring:
   application:
     name: way-api
@@ -20,6 +22,8 @@ spring:
         max-idle: 8
         max-wait: 50000
         max-active: 8
+  profiles:
+    active: dev
 
 server:
 #  port: 7529
@@ -37,6 +41,12 @@ mybatis-plus:
       logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
 way:
   api:
-    user-id: 1
-    app-id: way
-    app-secret: 1
+    access-key: a5f2534011dbcf8b0450fb1d263e4879
+    secret-key: 959cf0d8ce0d3fa6a207b9e9a70aa891
+#    user-id: 1
+#    app-id: way
+#    app-secret: 1
+
+cn:
+  wuaiyang:
+    name: "way"

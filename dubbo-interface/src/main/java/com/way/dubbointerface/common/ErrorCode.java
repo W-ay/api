@@ -14,7 +14,9 @@ public enum ErrorCode {
     NOT_FOUND_ERROR(40400, "请求数据不存在"),
     FORBIDDEN_ERROR(40300, "禁止访问"),
     SYSTEM_ERROR(50000, "系统内部异常"),
-    OPERATION_ERROR(50001, "操作失败");
+    OPERATION_ERROR(50001, "操作失败"),
+    INTERFACE_RESPONSE_ERROR(50002, "接口响应错误"),
+    CONNECTION_ERROR(50400, "连接错误");
 
     /**
      * 状态码
